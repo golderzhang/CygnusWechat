@@ -6,7 +6,7 @@
     class UserInfo {
         
         /*
-         * 获取用户基本信息
+         * 获取用户基本信息(从微信服务器)
          */
         public function getUserInfo($openID) {
             
@@ -18,6 +18,32 @@
             $response = $handle->getData($url);
             $userInfo = json_decode($response, true);
             return $userInfo;
+        }
+        
+        /*
+         * 设置用户备注名
+         * openid: 用户标识
+         * remark: 新的用户名，长度必须小于30
+         * return: true or false
+         */
+        public function updateUserRemark($openid, $remark) {
+            if (empty($openid) || empty($remark) || (strlen($remark) >= 30)) {
+                return false;
+            }
+             
+            $data = array("openid"=>$openid, "remark"=>$remark);
+            $handle = new NetHandle();
+            $access_token = new AccessToken();
+            $token = $access_token->getAccessToken();
+            $url = "https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token=".$token;
+        
+            $response = $handle->postData($url, $data);
+            $result = json_decode($response, true);
+            if ($result["errcode"] == 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
         
         /*
@@ -78,18 +104,6 @@
             return $userArray;
         }
         
-        /*
-         * 设置用户备注名
-         * openid: 用户标识
-         * remark: 新的用户名，长度必须小于30
-         * return: true or false
-         */
-        public function updateUserRemark($openid, $remark) {
-            if (empty($openid) || empty($remark) || (strlen($remark) >= 30)) {
-                return false;
-            }
-            	
-            $data = array("openid"=>$openid, "remark"=>$remark);
-        }
+        
     }
 ?>
