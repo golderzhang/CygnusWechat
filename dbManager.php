@@ -1,8 +1,10 @@
 <?php
 
 	define("DATABASE_HOST", "localhost:3306"); // 数据库主机
-	define("DATABASE_USERNAME", "zhangjinshi"); // 数据库用户名
-	define("DATABASE_PASSWORD", "zhangjs");	// 数据库密码
+// 	define("DATABASE_USERNAME", "zhangjinshi"); // 数据库用户名
+// 	define("DATABASE_PASSWORD", "zhangjs");	// 数据库密码
+	define("DATABASE_USERNAME", "golder"); // 数据库用户名
+	define("DATABASE_PASSWORD", "golder");	// 数据库密码
 	define("DATABASE_NAME", "cygnus_db"); // 数据库名
 	
 	

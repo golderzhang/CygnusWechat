@@ -1,4 +1,5 @@
 <?php
+
     class CommonMsg {
         
         /* 统一管理函数

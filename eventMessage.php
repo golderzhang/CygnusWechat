@@ -54,10 +54,26 @@
                 // 普通关注
             }
             
+            // 将用户数据存入数据库
             $userInfo = new UserInfo();
             $user = $userInfo->getUserInfo($fromUserName);
+            if ($userInfo->isExistInDatabase($fromUserName)) { // 用户已存在（关注又取消，再关注的用户）
+                // 更新数据库
+                $userInfo->updateUserInfos("openid='{$fromUserName}'", $user);
+            } else {
+                // 存入数据库
+                $userInfo->insertUserInfo($user);
+            }
             
-            
+            $time = time();
+            $textTpl = "<xml>
+							<ToUserName><![CDATA[%s]]></ToUserName>
+							<FromUserName><![CDATA[%s]]></FromUserName>
+							<CreateTime>%s</CreateTime>
+							<MsgType><![CDATA[%s]]></MsgType>
+							<Content><![CDATA[%s]]></Content>
+							<FuncFlag>0</FuncFlag>
+							</xml>";
             return "订阅";
         }
         
