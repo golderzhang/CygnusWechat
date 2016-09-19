@@ -1,12 +1,5 @@
 <?php
     define("WECHAT_ID", "cygnus1314");
-
-    $item1 = array("title"=>"新年快乐","description"=>"des","picurl"=>"www.baidu.com/pic1.jpg","url"=>"www");
-    $itemArray = array($item1, $item1);
-    
-    $msgObj = new Message();
-    $msg = $msgObj->createNewsMsg("zhangjinshi", $itemArray);
-    echo $msg;
     
     class Message {
         

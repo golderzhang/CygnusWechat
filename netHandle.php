@@ -1,4 +1,46 @@
 <?php
+
+    function request($url, $post = false, $postdata = null) {
+        $net = new NetHandle();
+        
+        if ($post) {
+            $result = $net->postData($url, $postdata);
+            return $result;
+        } else {
+            $result = $net->getData($url);
+            return $result;
+        }
+    }
+    
+    function download($url, $filename) {
+        if (empty($url)) {
+            return "";
+        }
+    
+        $ssl = substr($url, 0, 8) == "https://" ? true : false;
+    
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_NOBODY, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    
+        if ($ssl) {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        }
+    
+        $response = curl_exec($ch);
+        curl_close($ch);
+        
+        if (!file_exists("./download")) {
+            mkdir("./download");
+        }
+        file_put_contents("./download/".$filename, $response);
+    
+        return $response;
+    }
+
     class NetHandle {
         
         /* HTTP GET方式请求数据

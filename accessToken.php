@@ -5,6 +5,12 @@
     define("appID", "wx621f179d28795704");
     define("appsecret", "a063c5b1d7765ac5ff8f4b47c099f94b");
     
+    function getToken() {
+        $access_token = new AccessToken();
+        $token = $access_token->getAccessToken();
+        return $token;
+    }
+    
     /* 
      * Token相关类
      */
